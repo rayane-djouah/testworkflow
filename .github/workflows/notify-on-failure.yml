@@ -47,7 +47,7 @@ jobs:
           github_token: ${{ github.token }}
       
       - name: Get result
-        run: echo "${{steps.getMergedPullRequest.outputs.number}}"
+        run: echo "${{steps.getMergedPullRequest.outputs.result}}"
 
 
       - name: Process Each Failed Job
