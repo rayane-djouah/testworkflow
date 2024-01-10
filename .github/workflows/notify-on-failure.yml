@@ -33,12 +33,17 @@ jobs:
         with:
           script: |
             const runId = "${{ github.event.workflow_run.id }}";
-            const jobs = github.rest.actions.listJobsForWorkflowRun({
+            const jobs = await github.rest.actions.listJobsForWorkflowRun({
               owner: context.repo.owner,
               repo: context.repo.repo,
               run_id: runId,
             });
-            return jobs;
+            return jobs.jobs;
+
+      - name: Get merged pull request
+        id: getMergedPullRequest
+        uses: actions-ecosystem/action-get-merged-pull-request@59afe90821bb0b555082ce8ff1e36b03f91553d9
+
 
       - name: Process Each Failed Job
         uses: actions/github-script@v7
@@ -47,12 +52,18 @@ jobs:
             const runData = ${{fromJSON(steps.fetch-workflow-details.outputs.result)}};
             const jobs = ${{fromJSON(steps.fetch-workflow-jobs.outputs.result)}};
             const failureLabel = 'workflow-failure';
-            const pr = runData.pull_requests && runData.pull_requests.length > 0 ? runData.pull_requests[0] : null;
-            const prLink = pr ? pr.html_url : 'PR link not available';
+            const prNumber = steps.getMergedPullRequest.outputs.number;
+            const prLink = 'https://github.com/Expensify/App/pull/'+pr;
+
+            const pr = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber,
+            });
             const prAuthor = pr ? pr.user.login : 'Author not available';
             const prMerger = runData.merged_by ? runData.merged_by.login : 'Merger not available';
 
-            for (const job of jobs.jobs) {
+            for (const job of jobs) {
               if (job.conclusion == 'failure') {
                 const jobName = job.name;
                 const issues = await github.rest.issues.listForRepo({
