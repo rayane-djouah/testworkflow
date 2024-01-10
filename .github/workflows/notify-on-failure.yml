@@ -46,8 +46,21 @@ jobs:
         with:
           github_token: ${{ github.token }}
       
+      - name: Get merged pull request details
+        id: getMergedPullRequestdetails
+        uses: actions-ecosystem/action-get-merged-pull-request@59afe90821bb0b555082ce8ff1e36b03f91553d9
+        with:
+          script: |
+            const prNumber = ${{steps.getMergedPullRequest.outputs.number}};
+            const pr = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber,
+            });
+            return pr;
+          
       - name: Get result
-        run: echo "${{steps.getMergedPullRequest.outputs.result}}"
+        run: echo "${{steps.getMergedPullRequestdetails.outputs.result}}"
 
 
       - name: Process Each Failed Job
