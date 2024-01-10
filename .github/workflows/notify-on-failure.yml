@@ -6,6 +6,10 @@ on:
     types:
       - completed
 
+permissions:
+  issues: write
+  contents: write
+
 jobs:
   notify-failure:
     runs-on: ubuntu-latest
