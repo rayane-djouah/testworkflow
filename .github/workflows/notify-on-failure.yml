@@ -50,7 +50,7 @@ jobs:
       - name: Process Each Failed Job
         uses: actions/github-script@v7
         with:
-          github-token: ${{ github.token }}
+          github-token: ${{ secrets.OS_BOTIFY_TOKEN }}
           script: |
             const prNumber = ${{ steps.getMergedPullRequestNumber.outputs.number }};
             const runData = ${{fromJSON(steps.fetch-workflow-details.outputs.result)}};
@@ -95,7 +95,7 @@ jobs:
                   1. **Why the PR caused the job to fail?**\n
                   2. **Address any underlying issues.**\n\n
                   🐛 We appreciate your help in squashing this bug!`;
-                  const response = await github.rest.issues.create({
+                  github.rest.issues.create({
                     owner: context.repo.owner,
                     repo: context.repo.repo,
                     title: issueTitle,
