@@ -55,7 +55,7 @@ jobs:
             const prAuthor = pr ? pr.user.login : 'Author not available';
             const prMerger = runData.merged_by ? runData.merged_by.login : 'Merger not available';
 
-            for (const job of jobs) {
+            for (const job of jobs.jobs) {
               if (job.conclusion == 'failure') {
                 const jobName = job.name;
                 const issues = await github.rest.issues.listForRepo({
