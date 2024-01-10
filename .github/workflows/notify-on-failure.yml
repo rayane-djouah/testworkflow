@@ -66,6 +66,7 @@ jobs:
             console.log(`Processing for PR Number: ${prNumber}`);
             const runData = ${{fromJSON(steps.fetch-workflow-details.outputs.result)}};
             const jobs = ${{fromJSON(steps.fetch-workflow-jobs.outputs.result)}};
+            console.log(`Jobs: ${jobs}`);
             const failureLabel = 'workflow-failure';
 
             console.log(`Fetching data for PR Number: ${prNumber}`);
