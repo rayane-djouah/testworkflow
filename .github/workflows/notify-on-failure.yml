@@ -38,7 +38,7 @@ jobs:
               repo: context.repo.repo,
               run_id: runId,
             });
-            return jobs;
+            return jobs.data;
       
       - name: Get merged pull request number
         id: getMergedPullRequestNumber
@@ -56,13 +56,13 @@ jobs:
             const jobs = ${{fromJSON(steps.fetch-workflow-jobs.outputs.result)}};
             const failureLabel = 'workflow-failure';
 
-            const response = await github.rest.pulls.get({
+            const prData = await github.rest.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: prNumber,
             });
 
-            const pr = response.data;
+            const pr = prData.data;
 
             const prLink = pr.html_url;
             const prAuthor = pr.user.login;
