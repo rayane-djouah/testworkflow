@@ -32,6 +32,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
+            const runId = "${{ github.event.workflow_run.id }}";
             const jobs = github.rest.actions.listJobsForWorkflowRun({
               owner: context.repo.owner,
               repo: context.repo.repo,
