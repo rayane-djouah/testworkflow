@@ -26,12 +26,6 @@ jobs:
               run_id: runId
             });
             return runData.data;
-          debug: true
-        outputs:
-          runData: ${{ steps.fetch-details.outputs.result }}
-
-      - name: Echo Run Data
-        run: echo "Run Data: ${{ steps.fetch-details.outputs.runData }}"
 
       - name: Process Each Failed Job
         uses: actions/github-script@v7
