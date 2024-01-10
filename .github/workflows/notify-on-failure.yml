@@ -68,7 +68,7 @@ jobs:
             const prAuthor = pr.user.login;
             const prMerger = pr.merged_by.login;
 
-            for (int i=0; i<jobs.total_count; i++) {
+            for (let i=0; i<jobs.total_count; i++) {
               if (jobs.jobs[i].conclusion == 'failure') {
                 const jobName = jobs.jobs[i].name;
                 const jobLink = jobs.jobs[i].html_url;
