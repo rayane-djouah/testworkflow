@@ -6,7 +6,31 @@ on:
       - closed
 
 jobs:
-  if_merged:
+  job1:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        echo The PR was merged
+        exit 1
+
+  job2:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        echo The PR was merged
+        exit 1
+
+  job3:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        echo The PR was merged
+        exit 1
+
+  job4:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
