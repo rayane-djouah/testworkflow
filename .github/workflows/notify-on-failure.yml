@@ -69,7 +69,6 @@ jobs:
             const runData = ${{fromJSON(steps.fetch-workflow-details.outputs.result)}};
             const jobs = ${{steps.fetch-workflow-jobs.outputs.result}};
             console.log(`Jobs: ${jobs}`);
-            const failureLabel = 'workflow-failure';
 
             console.log(`Fetching data for PR Number: ${prNumber}`);
             const prData = await github.rest.pulls.get({
@@ -123,7 +122,7 @@ jobs:
                     repo: context.repo.repo,
                     title: issueTitle,
                     body: issueBody,
-                    labels: [failureLabel],
+                    labels: ['workflow-failure','daily'],
                     assignees: [prMerger, prAuthor]
                   });
                 }
