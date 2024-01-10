@@ -62,7 +62,6 @@ jobs:
               pull_number: prNumber,
             });
 
-            const prNumber = pr.number;
             const prLink = pr.html_url;
             const prAuthor = pr.user.login;
             const prMerger = pr.merged_by.login;
