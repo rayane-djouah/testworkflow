@@ -39,11 +39,19 @@ jobs:
               run_id: runId,
             });
             return jobs;
+      
+      - name: Get merged pull request number
+        id: getMergedPullRequestNumber
+        uses: actions-ecosystem/action-get-merged-pull-request@59afe90821bb0b555082ce8ff1e36b03f91553d9
+        with:
+          github_token: ${{ github.token }}
+
 
       - name: Process Each Failed Job
         uses: actions/github-script@v7
         with:
           script: |
+            const prNumber = ${{ steps.getMergedPullRequestNumber.outputs.number }};
             const runData = ${{fromJSON(steps.fetch-workflow-details.outputs.result)}};
             const jobs = ${{fromJSON(steps.fetch-workflow-jobs.outputs.result)}};
             const failureLabel = 'workflow-failure';
