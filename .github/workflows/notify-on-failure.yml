@@ -105,5 +105,4 @@ jobs:
                 }
               }
             }
-          with:
-            GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
