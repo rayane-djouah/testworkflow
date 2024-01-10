@@ -45,6 +45,9 @@ jobs:
         uses: actions-ecosystem/action-get-merged-pull-request@59afe90821bb0b555082ce8ff1e36b03f91553d9
         with:
           github_token: ${{ github.token }}
+      
+      - name: Get result
+        run: echo "${{steps.getMergedPullRequest.outputs.number}}"
 
 
       - name: Process Each Failed Job
