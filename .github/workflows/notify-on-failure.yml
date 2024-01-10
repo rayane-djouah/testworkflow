@@ -54,7 +54,7 @@ jobs:
             const runData = ${{fromJSON(steps.fetch-workflow-details.outputs.result)}};
             const jobs = ${{fromJSON(steps.fetch-workflow-jobs.outputs.result)}};
             const failureLabel = 'workflow-failure';
-            const prNumber = steps.getMergedPullRequest.outputs.number;
+            const prNumber = ${{steps.getMergedPullRequest.outputs.number}};
             const prLink = 'https://github.com/Expensify/App/pull/'+pr;
 
             const pr = await github.rest.pulls.get({
