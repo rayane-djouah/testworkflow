@@ -56,11 +56,13 @@ jobs:
             const jobs = ${{fromJSON(steps.fetch-workflow-jobs.outputs.result)}};
             const failureLabel = 'workflow-failure';
 
-            const pr = await github.rest.pulls.get({
+            const prJSON = await github.rest.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: prNumber,
             });
+
+            const pr = ${{fromJSON(pr)}};
 
             const prLink = pr.html_url;
             const prAuthor = pr.user.login;
