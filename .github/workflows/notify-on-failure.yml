@@ -16,7 +16,7 @@ jobs:
 
       - name: Fetch Workflow Run Details
         id: fetch-details
-        uses: actions/github-script@v5
+        uses: actions/github-script@v7
         with:
           script: |
             const runId = "${{ github.event.workflow_run.id }}";
@@ -26,10 +26,11 @@ jobs:
               run_id: runId
             });
             return runData.data;
-          github-token: ${{ secrets.TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Process Each Failed Job
-        uses: actions/github-script@v5
+        uses: actions/github-script@v7
         with:
           script: |
             const runData = ${{ fromJSON(steps.fetch-details.outputs.result) }};
