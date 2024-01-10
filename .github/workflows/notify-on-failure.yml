@@ -48,7 +48,7 @@ jobs:
       
       - name: Get merged pull request details
         id: getMergedPullRequestdetails
-        uses: actions-ecosystem/action-get-merged-pull-request@59afe90821bb0b555082ce8ff1e36b03f91553d9
+        uses: actions/github-script@v7
         with:
           script: |
             const prNumber = ${{steps.getMergedPullRequest.outputs.number}};
