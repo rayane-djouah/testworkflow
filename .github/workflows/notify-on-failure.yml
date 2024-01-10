@@ -26,9 +26,9 @@ jobs:
               run_id: runId
             });
             const jobs = github.rest.actions.listJobsForWorkflowRun({
-              owner,
-              repo,
-              run_id,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: runId,
             });
             return jobs;
       - name: Get result
