@@ -33,12 +33,12 @@ jobs:
         with:
           script: |
             const runId = "${{ github.event.workflow_run.id }}";
-            const jobs = await github.rest.actions.listJobsForWorkflowRun({
+            const jobsData = await github.rest.actions.listJobsForWorkflowRun({
               owner: context.repo.owner,
               repo: context.repo.repo,
               run_id: runId,
             });
-            return jobs.data;
+            return jobsData.data;
       
       - name: Get merged pull request number
         id: getMergedPullRequestNumber
@@ -68,7 +68,7 @@ jobs:
             const prAuthor = pr.user.login;
             const prMerger = pr.merged_by.login;
 
-            for (const job of jobs.jobs) {
+            for (const job of jobs) {
               if (job.conclusion == 'failure') {
                 const jobName = job.name;
                 const issues = await github.rest.issues.listForRepo({
