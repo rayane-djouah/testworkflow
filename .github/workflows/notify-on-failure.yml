@@ -94,7 +94,7 @@ jobs:
                   1. **Why the PR caused the job to fail?**\n
                   2. **Address any underlying issues.**\n\n
                   🐛 We appreciate your help in squashing this bug!`;
-                  await github.rest.issues.create({
+                  const response = await github.rest.issues.create({
                     owner: context.repo.owner,
                     repo: context.repo.repo,
                     title: issueTitle,
