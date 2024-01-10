@@ -1,19 +1,14 @@
 name: Sample Workflow
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    types:
+      - closed
 
 jobs:
-  build:
+  if_merged:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Force workflow failure
-        run: |
-          echo "This step will fail"
-          exit 1
+    - run: |
+        echo The PR was merged
