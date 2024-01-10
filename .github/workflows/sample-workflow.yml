@@ -1,0 +1,19 @@
+name: Sample Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Force workflow failure
+        run: |
+          echo "This step will fail"
+          exit 1
