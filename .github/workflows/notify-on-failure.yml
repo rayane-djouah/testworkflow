@@ -37,6 +37,7 @@ jobs:
           debug: true
           script: |
             const runId = "${{ github.event.workflow_run.id }}";
+            console.log(`Fetching details for Workflow Run ID: ${runId}`);
             const jobsData = await github.rest.actions.listJobsForWorkflowRun({
               owner: context.repo.owner,
               repo: context.repo.repo,
