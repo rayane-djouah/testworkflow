@@ -26,13 +26,13 @@ jobs:
           debug: true
           script: |
             const runId = "${{ github.event.workflow_run.id }}";
-            console.log(`Fetching details for workflow run ID: ${runId}`);
+            //console.log(`Fetching details for workflow run ID: ${runId}`);
             const runData = await github.rest.actions.getWorkflowRun({
               owner: context.repo.owner,
               repo: context.repo.repo,
               run_id: runId
             });
-            console.log(`Workflow Run Data:`, runData.data);
+            //console.log(`Workflow Run Data:`, runData.data);
             return runData.data;
 
       - name: Fetch Workflow Run Jobs
@@ -42,13 +42,15 @@ jobs:
           debug: true
           script: |
             const runId = "${{ github.event.workflow_run.id }}";
-            console.log(`Fetching jobs for workflow run ID: ${runId}`);
+            cont x = "${{ github.event.workflow_run }}";
+            console.log()
+            //console.log(`Fetching jobs for workflow run ID: ${runId}`);
             const jobsData = await github.rest.actions.listJobsForWorkflowRun({
               owner: context.repo.owner,
               repo: context.repo.repo,
               run_id: runId,
             });
-            console.log(`Workflow Run Jobs Data:`, jobsData.data);
+            //console.log(`Workflow Run Jobs Data:`, jobsData.data);
             return jobsData.data;
       
       - name: Get merged pull request number
@@ -65,13 +67,13 @@ jobs:
           debug: true
           script: |
             const prNumber = ${{ steps.getMergedPullRequestNumber.outputs.number }};
-            console.log(`Processing for PR Number: ${prNumber}`);
+            //console.log(`Processing for PR Number: ${prNumber}`);
             const runData = ${{fromJSON(steps.fetch-workflow-details.outputs.result)}};
             const jobs = ${{steps.fetch-workflow-jobs.outputs.result}};
-            console.log(`Jobs: ${jobs}`);
+            //console.log(`Jobs: ${jobs}`);
             const failureLabel = 'workflow-failure';
 
-            console.log(`Fetching data for PR Number: ${prNumber}`);
+            //console.log(`Fetching data for PR Number: ${prNumber}`);
             const prData = await github.rest.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -79,19 +81,19 @@ jobs:
             });
 
             const pr = prData.data;
-            console.log(`PR Data:`, pr);
+            //console.log(`PR Data:`, pr);
 
             const prLink = pr.html_url;
             const prAuthor = pr.user.login;
             const prMerger = pr.merged_by.login;
 
-            console.log(`Processing failed jobs, total count: ${jobs.total_count}`);
+            //console.log(`Processing failed jobs, total count: ${jobs.total_count}`);
             for (let i=0; i<jobs.total_count; i++) {
               if (jobs.jobs[i].conclusion == 'failure') {
                 const jobName = jobs.jobs[i].name;
                 const jobLink = jobs.jobs[i].html_url;
 
-                console.log(`Processing failed job: ${jobName}`);
+                //console.log(`Processing failed job: ${jobName}`);
                 const issues = await github.rest.issues.listForRepo({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
@@ -100,7 +102,7 @@ jobs:
                 });
 
                 const existingIssue = issues.data.find(issue => issue.title.includes(jobName));
-                console.log(`Existing issue for job ${jobName}:`, existingIssue);
+                //console.log(`Existing issue for job ${jobName}:`, existingIssue);
                 
                 if (!existingIssue) {
                   const issueTitle = `🔍 Investigation Needed: ${jobName} Failure due to PR Merge 🔍`;
@@ -117,7 +119,7 @@ jobs:
                   `1. **Why the PR caused the job to fail?**\n` +
                   `2. **Address any underlying issues.**\n\n` +
                   `🐛 We appreciate your help in squashing this bug!`;
-                  console.log(`Creating issue for job ${jobName}`);
+                  //console.log(`Creating issue for job ${jobName}`);
                   github.rest.issues.create({
                     owner: context.repo.owner,
                     repo: context.repo.repo,
