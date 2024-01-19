@@ -2,7 +2,7 @@ name: Notify on Workflow Failure
 
 on:
   workflow_run:
-    workflows: ["$MAIN_WORKFLOW_NAME"]
+    workflows: ["Sample Workflow"]
     types:
       - completed
 
