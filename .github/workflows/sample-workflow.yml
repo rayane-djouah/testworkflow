@@ -4,8 +4,6 @@ on:
   pull_request:
     types:
       - closed
-env:
-  MAIN_WORKFLOW_NAME: "Sample Workflow"
 
 jobs:
   job1:
