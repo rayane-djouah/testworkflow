@@ -25,7 +25,7 @@ jobs:
         with:
           debug: true
           script: |
-            const commit_sha = "${{ github.event.workflow_run.actor.head_commit.id }}";
+            const commit_sha = "${{ github.event.workflow_run.head_commit.id }}";
             console.log(commit_sha);
             console.log(${{ github.sha}});
             const prs = await github.rest.repos.listPullRequestsAssociatedWithCommit({
