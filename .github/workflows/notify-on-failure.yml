@@ -27,6 +27,17 @@ jobs:
           script: |
             const commit = "${{ github.event.workflow_run.head_commit.id }}";
             console.log(commit);
+            const prs = await github.rest.repos.listPullRequestsAssociatedWithCommit({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: commit,
+            });
+
+
+            const pr = prs.data[0];
+            console.log(pr.html_url);
+            console.log(pr.user.login);
+            console.log(pr.merged_by.login);
 
             const runId = "${{ github.event.workflow_run.id }}";
             //console.log(`Fetching details for workflow run ID: ${runId}`);
