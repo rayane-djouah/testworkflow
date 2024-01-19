@@ -27,10 +27,10 @@ jobs:
           script: |
             const commit_sha = "${{ github.event.workflow_run.actor.head_commit.id }}";
             console.log(commit_sha);
-
+            console.log(context.github.sha);
             const prs = await github.rest.repos.listPullRequestsAssociatedWithCommit({
-              owner,
-              repo,
+              context.repo.owner,
+              context.repo.repo,
               commit_sha,
             });
 
