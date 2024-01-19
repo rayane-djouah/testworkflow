@@ -35,9 +35,9 @@ jobs:
             });
 
             const pr = prs.data[0];
-            console.log(pr.html_url)
-            console.log(pr.user.login)
-            console.log(pr.merged_by.login)
+            console.log(pr.html_url);
+            console.log(pr.user.login);
+            console.log(pr.merged_by.login);
 
             const runId = "${{ github.event.workflow_run.id }}";
             //console.log(`Fetching details for workflow run ID: ${runId}`);
