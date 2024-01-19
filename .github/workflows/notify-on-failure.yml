@@ -25,6 +25,8 @@ jobs:
         with:
           debug: true
           script: |
+            const logi = "${{ github.event.workflow_run.actor.login }}";
+            console.log(logi);
             const runId = "${{ github.event.workflow_run.id }}";
             //console.log(`Fetching details for workflow run ID: ${runId}`);
             const runData = await github.rest.actions.getWorkflowRun({
