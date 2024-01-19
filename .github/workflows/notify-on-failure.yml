@@ -2,7 +2,7 @@ name: Notify on Workflow Failure
 
 on:
   workflow_run:
-    workflows: ["sample-worflow.yml"]
+    workflows: ["$MAIN_WORKFLOW_NAME"]
     types:
       - completed
 
@@ -47,7 +47,7 @@ jobs:
 
             const headCommit = "${{ github.event.workflow_run.head_commit.id }}";
             console.log(`headCommit: ${headCommit} `);
-
+            
             const prs = await github.rest.repos.listPullRequestsAssociatedWithCommit({
               owner: context.repo.owner,
               repo: context.repo.repo,
