@@ -2,7 +2,7 @@ name: Notify on Workflow Failure
 
 on:
   workflow_run:
-    workflows: ["./sample-workflow.yml"]
+    workflows: ["Sample Workflow"]
     types:
       - completed
 
@@ -60,6 +60,13 @@ jobs:
                 const jobName = jobs.jobs[i].name;
                 const jobLink = jobs.jobs[i].html_url;
 
+                const annotations = await github.rest.checks.listAnnotations({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  jobs.jobs[i].id,
+                });
+                const errorMessage = annotations.data[0].message;
+
                 console.log(`Processing failed job: ${jobName}`);
                 const issues = await github.rest.issues.listForRepo({
                   owner: context.repo.owner,
@@ -79,6 +86,7 @@ jobs:
                   `- **🔗 Triggered by PR**: [PR Link](${prLink})\n` +
                   `- **👤 PR Author**: @${prAuthor}\n` +
                   `- **🤝 Merged by**: @${prMerger}\n\n` +
+                  `- **🐛 Error Message**: \n @${errorMessage}\n\n` +
                   `⚠️ **Action Required** ⚠️:\n\n` +
                   `🛠️ A recent merge appears to have caused a failure in the job named [${jobName}](${jobLink}).\n` +
                   `This issue has been automatically created and labeled with \`${failureLabel}\` for investigation. \n\n` +
