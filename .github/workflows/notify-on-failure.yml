@@ -65,7 +65,11 @@ jobs:
                   repo: context.repo.repo,
                   check_run_id: jobs.jobs[i].id,
                 });
-                const errorMessage = annotations.data[0].message;
+                let errorMessage = "";
+                for(let j = 0; j < annotation.lenght; j++){
+                  errorMessage +=  annotations.data[j].annotation_level + ": "; 
+                  errorMessage +=  annotations.data[j].message + "\n";  
+                }
 
                 console.log(`Processing failed job: ${jobName}`);
                 const issues = await github.rest.issues.listForRepo({
@@ -86,7 +90,7 @@ jobs:
                   `- **🔗 Triggered by PR**: [PR Link](${prLink})\n` +
                   `- **👤 PR Author**: @${prAuthor}\n` +
                   `- **🤝 Merged by**: @${prMerger}\n\n` +
-                  `- **🐛 Error Message**: \n @${errorMessage}\n\n` +
+                  `- **🐛 Error Message**: \n ${errorMessage}\n\n` +
                   `⚠️ **Action Required** ⚠️:\n\n` +
                   `🛠️ A recent merge appears to have caused a failure in the job named [${jobName}](${jobLink}).\n` +
                   `This issue has been automatically created and labeled with \`${failureLabel}\` for investigation. \n\n` +
