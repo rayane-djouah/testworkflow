@@ -63,7 +63,7 @@ jobs:
                 const annotations = await github.rest.checks.listAnnotations({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
-                  jobs.jobs[i].id,
+                  check_run_id: jobs.jobs[i].id,
                 });
                 const errorMessage = annotations.data[0].message;
 
