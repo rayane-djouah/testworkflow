@@ -38,7 +38,7 @@ jobs:
           script: |
             const jobs = ${{steps.fetch-workflow-jobs.outputs.result}};
             console.log(`Jobs: ${jobs}`);
-            const failureLabel = 'workflow-failure';
+            const failureLabel = 'Workflow Failure';
 
             const headCommit = "${{ github.event.workflow_run.head_commit.id }}";
             console.log(`headCommit: ${headCommit} `);
