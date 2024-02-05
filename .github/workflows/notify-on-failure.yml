@@ -27,10 +27,6 @@ jobs:
             w = "${{ github.event.workflow_run }}";
             console.log(`workflow_run: ${w}`);
 
-            w = github.event.workflow_run;
-            ww = JSON.stringify(w);
-            console.log(`workflow_run: ${ww}`);
-
             const runId = "${{ github.event.workflow_run.id }}";
             console.log(`Fetching jobs for workflow run ID: ${runId}`);
             const jobsData = await github.rest.actions.listJobsForWorkflowRun({
