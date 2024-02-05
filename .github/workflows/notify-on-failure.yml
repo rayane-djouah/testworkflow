@@ -20,12 +20,9 @@ jobs:
         with:
           debug: true
           script: |
-            let w = ${{ github.event.workflow_run }};
-            let ww = JSON.stringify(w);
+            const w = "${{ github.event.workflow_run }}";
+            const ww = JSON.stringify(w);
             console.log(`workflow_run: ${ww}`);
-
-            w = "${{ github.event.workflow_run }}";
-            console.log(`workflow_run: ${w}`);
 
             const runId = "${{ github.event.workflow_run.id }}";
             console.log(`Fetching jobs for workflow run ID: ${runId}`);
