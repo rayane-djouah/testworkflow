@@ -20,7 +20,7 @@ jobs:
         with:
           debug: true
           script: |
-            const w = ${{ github.event.workflow_run }};
+            const w = ${{ github.event.workflow_run.name }};
             console.log('workflow_run: ', JSON.stringify(w));
 
             const runId = "${{ github.event.workflow_run.id }}";
